@@ -12,9 +12,9 @@ import com.SPE.miniproject.dto.ErrorResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Division by zero (or any business logic error)
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
+    // Division by zero
+    @ExceptionHandler(DivisionByZeroException.class)
+    public ResponseEntity<ErrorResponse> handleDivisionByZero(DivisionByZeroException ex) {
         ErrorResponse body = new ErrorResponse(400, "Bad Request", ex.getMessage());
         return ResponseEntity.badRequest().body(body);
     }

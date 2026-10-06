@@ -2,6 +2,8 @@ package com.SPE.miniproject.Service;
 
 import org.springframework.stereotype.Service;
 
+import com.SPE.miniproject.exception.DivisionByZeroException;
+
 @Service 
 public class CalculatorService {
     public int add(int a,int b){
@@ -15,7 +17,7 @@ public class CalculatorService {
     }
     public double div(int a, int b){
         if(b==0){
-            throw new RuntimeException("Divison By zero is not allowed");
+            throw new DivisionByZeroException("Divison By zero is not allowed");
         }
         return (double)a/b;
     }
