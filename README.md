@@ -70,7 +70,7 @@ GET /api/v1/divide?a=10&b=2
 
 **Divide by zero — Response 400:**
 ```json
-{ "status": 400, "error": "Bad Request", "message": "Divison By zero is not allowed" }
+{ "status": 400, "error": "Bad Request", "message": "Division By zero is not allowed" }
 ```
 
 ### Health
@@ -92,7 +92,7 @@ All errors return HTTP **400** with a structured body:
 |-----------------------|---------|
 | Missing parameter     | `Missing required parameter: b` |
 | Non-numeric parameter | `Invalid value for parameter 'a': must be a number` |
-| Division by zero      | `Divison By zero is not allowed` |
+| Division by zero      | `Division By zero is not allowed` |
 
 ---
 

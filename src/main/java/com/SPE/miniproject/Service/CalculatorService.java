@@ -17,7 +17,7 @@ public class CalculatorService {
     }
     public double div(int a, int b){
         if(b==0){
-            throw new DivisionByZeroException("Divison By zero is not allowed");
+            throw new DivisionByZeroException("Division By zero is not allowed");
         }
         return (double)a/b;
     }
