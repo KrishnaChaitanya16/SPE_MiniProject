@@ -57,4 +57,27 @@ class CalculatorControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("UP"));
     }
+
+    @Test
+    void divideByZeroReturns400WithErrorBody() throws Exception {
+        mockMvc.perform(get("/api/v1/divide").param("a", "10").param("b", "0"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message").value("Division By zero is not allowed"));
+    }
+
+    @Test
+    void missingParameterReturns400() throws Exception {
+        mockMvc.perform(get("/api/v1/add").param("a", "5"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Missing required parameter: b"));
+    }
+
+    @Test
+    void nonNumericParameterReturns400() throws Exception {
+        mockMvc.perform(get("/api/v1/add").param("a", "abc").param("b", "3"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Invalid value for parameter 'a': must be a number"));
+    }
 }
