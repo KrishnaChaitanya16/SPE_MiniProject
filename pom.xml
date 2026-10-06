@@ -11,21 +11,8 @@
 	<groupId>com.SPE</groupId>
 	<artifactId>miniproject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	<name>miniproject</name>
+	<description>Calculator REST API with an end-to-end CI/CD pipeline (Jenkins, Docker, Docker Compose)</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
