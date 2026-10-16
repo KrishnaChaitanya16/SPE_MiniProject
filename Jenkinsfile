@@ -16,6 +16,8 @@ pipeline {
         IMAGE_TAG  = "${env.BUILD_NUMBER}"
         // Jenkins credential ID of type "Username with password" (Docker Hub user + access token)
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
+        // Recipient of the build status emails
+        NOTIFY_EMAIL = '16krish2005@gmail.com'
 
         // Jenkins launched from the macOS app does not inherit the shell PATH
         PATH = "/usr/local/bin:/opt/homebrew/bin:/Applications/Docker.app/Contents/Resources/bin:${env.PATH}"
@@ -95,6 +97,25 @@ pipeline {
                     exit 1
                 '''
             }
+        }
+    }
+    post {
+        success {
+            mail to: env.NOTIFY_EMAIL,
+                 subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} succeeded.
+
+Image deployed: ${env.IMAGE_NAME}:${env.IMAGE_TAG}
+Build URL: ${env.BUILD_URL}
+"""
+        }
+        failure {
+            mail to: env.NOTIFY_EMAIL,
+                 subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} failed.
+
+Console output: ${env.BUILD_URL}console
+"""
         }
     }
 }
