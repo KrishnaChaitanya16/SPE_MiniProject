@@ -69,5 +69,32 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy') {
+            environment {
+                // Jenkins itself normally owns 8080, so publish the app on 8081
+                APP_PORT = '8081'
+            }
+            steps {
+                // Idempotent: unchanged services are left running, a new image tag recreates only the replicas
+                sh '''
+                    docker compose up -d --remove-orphans
+
+                    for i in $(seq 1 30); do
+                        if curl -fs "http://localhost:${APP_PORT}/actuator/health" | grep -q '"status":"UP"'; then
+                            echo "Deployment healthy on port ${APP_PORT}"
+                            exit 0
+                        fi
+                        echo "Waiting for application to become healthy ($i/30)..."
+                        sleep 5
+                    done
+
+                    echo "Deployment did not become healthy" >&2
+                    docker compose ps
+                    docker compose logs --tail=50
+                    exit 1
+                '''
+            }
+        }
     }
 }
