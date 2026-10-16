@@ -1,0 +1,13 @@
+services:
+  calculator:
+    build: .
+    image: krishnachaitanya1605/calculator-api:${IMAGE_TAG:-latest}
+    ports:
+      - "8080:8080"
+    networks:
+      - calc-net
+
+networks:
+  calc-net:
+    name: calc-net
+    driver: bridge
