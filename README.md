@@ -14,14 +14,13 @@ A simple REST calculator service exposing arithmetic endpoints with structured J
 ## Build
 
 ```bash
-cd miniproject
-mvn clean package -DskipTests
+./mvnw clean package -DskipTests
 ```
 
 ## Run
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 The server starts on **http://localhost:8080**.
@@ -79,7 +78,7 @@ GET /actuator/health
 ```
 **Response 200:**
 ```json
-{ "status": "UP" }
+{ "groups": ["liveness", "readiness"], "status": "UP" }
 ```
 
 ---
@@ -99,5 +98,29 @@ All errors return HTTP **400** with a structured body:
 ## Run Tests
 
 ```bash
-mvn test
+./mvnw test
+```
+
+The suite has two layers:
+
+- **Unit tests (JUnit 5)** in `CalculatorServiceTest` cover add, subtract, multiply, divide and the divide-by-zero case.
+- **Integration tests (Spring MVC, `MockMvc`)** in `CalculatorControllerTest` call the real endpoints and check status codes, JSON bodies, validation errors and `/actuator/health`.
+
+JUnit XML reports are written to `target/surefire-reports/`, which is what Jenkins publishes.
+
+---
+
+## Project Structure
+
+```
+.
+├── src/main/java/...      # Spring Boot application (controller, service, dto, exception)
+├── src/test/java/...      # JUnit 5 and MockMvc tests
+├── pom.xml                # Maven build
+├── Dockerfile             # multi-stage image build
+├── .dockerignore
+├── docker-compose.yml     # calculator replicas + nginx proxy
+├── nginx/nginx.conf       # reverse proxy / load balancer config
+├── Jenkinsfile            # declarative CI/CD pipeline
+└── README.md
 ```
