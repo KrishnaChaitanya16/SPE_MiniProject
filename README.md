@@ -83,6 +83,7 @@ GET /actuator/health
 
 ---
 
+#hello
 ## Error Responses
 
 All errors return HTTP **400** with a structured body:
