@@ -202,3 +202,5 @@ The deploy stage is idempotent: re-running with the same image tag leaves the ru
 5. Add a GitHub webhook to `http://<jenkins-host>/github-webhook/` for push events.
 
 After a successful run the API is available at http://localhost:8081.
+
+# The End
